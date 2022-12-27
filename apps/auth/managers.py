@@ -7,15 +7,13 @@ class UserManager(object):
     @classmethod
     def create_user(cls, db: Session , **kwargs):
         email = kwargs.get('email')
-        password = kwargs.get('password1')
-        existing_user = db.query(cls).filter_by(email=email).first()
+        password = kwargs.get('password')
+        existing_user_email = db.query(cls).filter_by(email=email).first()
 
-        if existing_user:
+        if existing_user_email:
             raise ValueError('Email address already registered')
 
         kwargs['password'] = Hasher.get_password_hash(password)
-        kwargs.pop('password1', None)
-        kwargs.pop('password2', None)
 
         obj = cls(**kwargs)
         db.add(obj)
@@ -23,4 +21,3 @@ class UserManager(object):
         db.refresh(obj)
         obj.password = None
         return obj
-

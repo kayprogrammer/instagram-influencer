@@ -3,13 +3,13 @@ from . database import engine
 from . database import Base
 from . settings import *
 
-from apps.accounts.routes import accountsrouter
-from apps.search.routes import searchrouter
+from apps.auth.routes import authrouter
+from apps.influencers.routes import influencersrouter
 
 app = FastAPI()
 
 Base.metadata.create_all(bind=engine)
 
-app.include_router(accountsrouter, prefix='/api/v1/accounts')
-app.include_router(searchrouter, prefix='/api/v1/search')
+app.include_router(authrouter, prefix='/api/v1/auth')
+app.include_router(influencersrouter, prefix='/api/v1/influencers')
 
