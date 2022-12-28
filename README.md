@@ -10,7 +10,15 @@ A simple Instagram Influencer search portal built with Fastapi.
 ```
 
 #### In the root directory:
-- Create a virtual environment, activate and run...
+- Create a virtual environment
+```bash
+    $ python3 -m venv env
+```
+- Activate environment
+```bash
+    $ source env/bin/activate
+```
+- Install dependencies
 ```bash
     $ pip install -r requirements.txt
 ```
