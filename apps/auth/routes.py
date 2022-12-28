@@ -1,4 +1,4 @@
-from fastapi import Request, APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from typing import List
@@ -22,7 +22,12 @@ async def get_current_user(token: str = Depends(oauth), db: Session = Depends(ge
     return user
 
 @authrouter.post('/register')
-async def register(request: Request, user: UserSchema, db: Session = Depends(get_db), status_code = status.HTTP_201_CREATED):
+async def register(
+        user: UserSchema, 
+        db: Session = Depends(get_db), 
+        status_code = status.HTTP_201_CREATED
+    ):
+
     try:
         new_user = User.create_user(db=db, **user.dict()) # create user based on defined method in UserManager class in managers.py file
     except Exception as e: # return any possible exception
@@ -31,7 +36,12 @@ async def register(request: Request, user: UserSchema, db: Session = Depends(get
     return {'user': user, 'message': 'Registration successful'}
 
 @authrouter.post('/login')
-async def login(request: Request, user: UserSchema, db: Session = Depends(get_db), status_code = status.HTTP_201_CREATED):
+async def login(
+        user: UserSchema, 
+        db: Session = Depends(get_db), 
+        status_code = status.HTTP_201_CREATED
+    ):
+
     user_obj = db.query(User).filter_by(email=user.email).first() # get user object from db based on email
     if not user_obj:
         raise HTTPException(status_code=400, detail='Invalid Credentials')
@@ -51,7 +61,12 @@ async def login(request: Request, user: UserSchema, db: Session = Depends(get_db
     return {'access': access, 'refresh': refresh}
 
 @authrouter.post('/refresh')
-async def refresh(request: Request, token: RefreshTokenSchema, db: Session = Depends(get_db), status_code = status.HTTP_201_CREATED):
+async def refresh(
+        token: RefreshTokenSchema, 
+        db: Session = Depends(get_db),
+        status_code = status.HTTP_201_CREATED
+     ):
+
     active_jwt = db.query(Jwt).filter_by(refresh=token.refresh).first() # gets jwt object from db
     if not active_jwt:
         raise HTTPException(status_code=400, detail='refresh token not found')
@@ -62,7 +77,6 @@ async def refresh(request: Request, token: RefreshTokenSchema, db: Session = Dep
         raise HTTPException(status_code=400, detail='refresh token is invalid or expired')
 
     # create new tokens
-
     access = get_access_token({'user_id': active_jwt.user_id})
     refresh = get_refresh_token()
 
@@ -73,8 +87,13 @@ async def refresh(request: Request, token: RefreshTokenSchema, db: Session = Dep
     return {'access': access, 'refresh': refresh}
 
 @authrouter.get('/logout')
-async def logout(request: Request, db: Session = Depends(get_db), user: User = Depends(get_current_user), status_code = status.HTTP_200_OK):
-    # delete existing jwts
+async def logout(
+        db: Session = Depends(get_db), 
+        user: User = Depends(get_current_user), 
+        status_code = status.HTTP_200_OK
+    ):
+    
+    # delete existing jwts of the logged in user
     db.query(Jwt).filter_by(user_id = user.id).delete()
     db.commit()
     return {'message': 'Logged out successfully'}

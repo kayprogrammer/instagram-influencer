@@ -9,6 +9,12 @@ class InfluencersSchema(BaseModel):
     class Config:
         orm_mode = True
 
+    @validator('username')
+    def validate_username(cls, v):
+        if " " in v:
+            raise ValueError('Username must not contain any space')
+        return v
+
     @validator('bio')
     def validate_bio(cls, v):
         if v and len(v) > 100:

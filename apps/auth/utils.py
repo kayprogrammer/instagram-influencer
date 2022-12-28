@@ -5,12 +5,13 @@ import string
 
 from setup.settings import SECRET_KEY
 
-from . models import User
+from . models import User, Jwt
 
+# generate random string
 def get_random(length):
     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
 
-
+# generate access token based on user's id
 def get_access_token(payload):
     return jwt.encode(
         {"exp": datetime.utcnow() + timedelta(minutes=5), **payload},
@@ -18,7 +19,7 @@ def get_access_token(payload):
         algorithm="HS256"
     )
 
-
+# generate random refresh token
 def get_refresh_token():
     return jwt.encode(
         {"exp": datetime.utcnow() + timedelta(hours=24), "data": get_random(10)},
@@ -26,7 +27,7 @@ def get_refresh_token():
         algorithm="HS256"
     )
 
-
+# verify refresh token
 def verify_token(token):
     
     try:
@@ -36,6 +37,7 @@ def verify_token(token):
     except:
         return False
 
+# deocde access token from header
 def decodeJWT(db, token):
     if not token:
         return None
@@ -52,7 +54,7 @@ def decodeJWT(db, token):
         
         if user:
             jwt_obj = db.query(Jwt).filter_by(user_id=user.id).first()
-            if not jwt_obj:
+            if not jwt_obj: # to confirm the validity of the token
                 return None
             return user
         return None
