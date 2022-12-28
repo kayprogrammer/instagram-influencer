@@ -32,7 +32,7 @@ A simple Instagram Influencer search portal built with Fastapi.
     * PG_HOST=localhost
     * PG_PORT=5432
 
-- Start the server... 
+- Start the server
 ```bash
     $ uvicorn setup.main:app --reload
 ```
