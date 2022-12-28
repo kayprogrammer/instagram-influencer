@@ -21,11 +21,10 @@ async def get_current_user(token: str = Depends(oauth), db: Session = Depends(ge
 
     return user
 
-@authrouter.post('/register')
+@authrouter.post('/register', status_code = 201)
 async def register(
         user: UserSchema, 
         db: Session = Depends(get_db), 
-        status_code = status.HTTP_201_CREATED
     ):
 
     try:
@@ -35,11 +34,10 @@ async def register(
         raise HTTPException(status_code=400, detail=str(e))
     return {'user': user, 'message': 'Registration successful'}
 
-@authrouter.post('/login')
+@authrouter.post('/login', status_code = status.HTTP_201_CREATED)
 async def login(
         user: UserSchema, 
         db: Session = Depends(get_db), 
-        status_code = status.HTTP_201_CREATED
     ):
 
     user_obj = db.query(User).filter_by(email=user.email).first() # get user object from db based on email
@@ -60,11 +58,10 @@ async def login(
     db.commit()
     return {'access': access, 'refresh': refresh}
 
-@authrouter.post('/refresh')
+@authrouter.post('/refresh', status_code = status.HTTP_201_CREATED)
 async def refresh(
         token: RefreshTokenSchema, 
         db: Session = Depends(get_db),
-        status_code = status.HTTP_201_CREATED
      ):
 
     active_jwt = db.query(Jwt).filter_by(refresh=token.refresh).first() # gets jwt object from db
@@ -86,11 +83,10 @@ async def refresh(
 
     return {'access': access, 'refresh': refresh}
 
-@authrouter.get('/logout')
+@authrouter.get('/logout', status_code = status.HTTP_200_OK)
 async def logout(
         db: Session = Depends(get_db), 
-        user: User = Depends(get_current_user), 
-        status_code = status.HTTP_200_OK
+        user: User = Depends(get_current_user),
     ):
     
     # delete existing jwts of the logged in user

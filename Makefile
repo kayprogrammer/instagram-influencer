@@ -25,3 +25,9 @@ volume:
 
 instagram-influencer-db:
 	docker compose exec postgres-db psql --username=kene --dbname=instagram-influencer
+
+test-auth:
+	docker compose exec api pytest apps/auth/tests.py --disable-warnings
+
+test-influencers:
+	docker compose exec api pytest apps/influencers/tests.py --disable-warnings

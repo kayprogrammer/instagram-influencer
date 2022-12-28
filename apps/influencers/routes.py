@@ -12,12 +12,11 @@ from setup.database import get_db
 
 influencersrouter = APIRouter(tags=['influencers'])
 
-@influencersrouter.post('/provide-details')
+@influencersrouter.post('/provide-details', status_code = status.HTTP_200_OK)
 async def provide_details(
         influencer: InfluencersSchema, 
         db: Session = Depends(get_db), 
-        user: User = Depends(get_current_user), 
-        status_code = status.HTTP_200_OK
+        user: User = Depends(get_current_user),
     ):
 
     duplicate_user = db.query(User).filter_by(username=influencer.username).filter(User.id != user.id).first()
@@ -33,13 +32,12 @@ async def provide_details(
     db.commit()
     return {'influencer': influencer, 'message': 'Influencer profile updated'}
 
-@influencersrouter.get('/search', response_model = List[InfluencersSchema])
+@influencersrouter.get('/search', status_code = status.HTTP_200_OK, response_model = List[InfluencersSchema])
 async def search(
         text: str = None, 
         max_followers: int = None, 
         min_followers: int = None, 
-        db: Session = Depends(get_db), 
-        status_code = status.HTTP_200_OK
+        db: Session = Depends(get_db),
     ):
 
     # filter all influencers, ensuring that they have a usrename and followers count

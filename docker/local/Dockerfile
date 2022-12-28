@@ -29,6 +29,6 @@ COPY ./docker/local/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint
 
-CMD ["uvicorn", "setup.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "setup.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
 ENTRYPOINT [ "/entrypoint" ]
