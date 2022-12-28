@@ -89,7 +89,7 @@ OR
 
 - Docs
     * Swagger: `/docs` 
-- Auth 
+- Auth
     * Register: `/api/v1/auth/register`
     * Login: `/api/v1/auth/login`
     * Refresh token: `/api/v1/auth/refresh`
