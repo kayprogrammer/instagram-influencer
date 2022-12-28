@@ -31,7 +31,7 @@ In the root directory:
 ```
 
 #### Test Coverage
----
+--
 - Auth routes 
 ```bash
     $ pytest apps/auth/tests.py --disable-warnings
@@ -42,7 +42,7 @@ In the root directory:
 ```
 
 ### With Docker + Makefile
----
+--
 - Change the value of POSTGRES_DB in `.env` file from localhost to postgres-db
 - Run command below to build container
 ```bash
@@ -62,7 +62,7 @@ OR
 ```
 
 #### Test Coverage
----
+--
 - Auth routes
 ```bash
     $ docker compose exec api pytest apps/auth/tests.py --disable-warnings
