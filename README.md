@@ -1,3 +1,9 @@
+<p align="center">
+  <a href="https://fastapi.tiangolo.com"><img src="https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png" alt="FastAPI"></a>
+</p>
+
+---
+
 ## Description
 
 A simple Instagram Influencer search portal built with Fastapi.
@@ -10,7 +16,7 @@ A simple Instagram Influencer search portal built with Fastapi.
 ```
 
 In the root directory:
-
+---
 - Create a virtual environment, activate and run...
 ```bash
     $ pip install -r requirements.txt
@@ -31,7 +37,7 @@ In the root directory:
 ```
 
 #### Test Coverage
-
+---
 - Auth routes 
 ```bash
     $ pytest apps/auth/tests.py --disable-warnings
@@ -42,7 +48,7 @@ In the root directory:
 ```
 
 ### With Docker + Makefile
-
+---
 - Change the value of POSTGRES_DB in `.env` file from localhost to postgres-db
 - Run command below to build container
 ```bash
@@ -62,7 +68,7 @@ OR
 ```
 
 #### Test Coverage
-
+---
 - Auth routes
 ```bash
     $ docker compose exec api pytest apps/auth/tests.py --disable-warnings
