@@ -9,7 +9,7 @@ A simple Instagram Influencer search portal built with Fastapi.
     $ git clone https://www.github.com/kayprogrammer/instagram-influencers/
 ```
 
-In the root directory:
+#### In the root directory:
 - Create a virtual environment, activate and run...
 ```bash
     $ pip install -r requirements.txt
