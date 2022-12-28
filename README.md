@@ -23,7 +23,7 @@ A simple Instagram Influencer search portal built with Fastapi.
     $ pip3 install -r requirements.txt
 ```
 - Create a file `.env` and copy all variables from the `.env.example` to the file.
-    You can create a new database locally with pgadmin and input the details to the respected variables in the .env file. Like this...
+    You can create a new database locally with pgadmin and input the details to the respected variables in the `.env` file like this...
 
     * SECRET_KEY=any_unique_random_string
     * POSTGRES_USER=your_postgres_username
